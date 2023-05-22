@@ -32,9 +32,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         .getQuiz(this.categoryId, this.difficulty.toLowerCase())
         .subscribe((data) => {
           this.quiz = data;
-          console.log(this.quiz);
-          this.sharingService.changeData('merge');
-          this.router.navigate(['results']);
+          // this.sharingService.changeData(JSON.stringify(this.quiz));
         })
     );
   }

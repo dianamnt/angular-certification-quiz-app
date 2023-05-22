@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { SharingService } from '../../services/sharing.service';
 
 @Component({
@@ -6,16 +7,20 @@ import { SharingService } from '../../services/sharing.service';
   templateUrl: './results.component.html',
   styleUrls: ['./results.component.css'],
 })
-export class ResultsComponent implements OnInit {
+export class ResultsComponent implements OnInit, OnDestroy {
   cv: string;
+  subscription: Subscription = new Subscription();
   constructor(private sharingService: SharingService) {}
 
   ngOnInit() {
-    console.log('intra in init');
-    this.sharingService.getData().subscribe((data) => {
-      this.cv = data;
-      console.log('ceva orice plm');
-      console.log(data);
-    });
+    this.subscription.add(
+      this.sharingService.currentData$.subscribe((data) => {
+        this.cv = data;
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

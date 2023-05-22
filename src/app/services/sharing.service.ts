@@ -12,6 +12,5 @@ export class SharingService {
 
   changeData(data: string) {
     this.data$.next(data);
-    console.log('s-o setat');
   }
 }
