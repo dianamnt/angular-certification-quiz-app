@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SharingService {
-  private data$ = new Subject<string>;
+  private data$ = new BehaviorSubject('default message');
+  currentData$ = this.data$;
 
   constructor() {}
 
-  getData() {
-    return this.data$.asObservable();
-  }
-
-  setData(data: string) {
+  changeData(data: string) {
     this.data$.next(data);
+    console.log('s-o setat');
   }
 }
