@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   imports: [
@@ -10,8 +11,9 @@ import { MatSelectModule } from '@angular/material/select';
     BrowserAnimationsModule,
     MatButtonModule,
     MatSelectModule,
+    MatFormFieldModule,
   ],
-  exports: [MatButtonModule, MatSelectModule],
+  exports: [MatButtonModule, MatSelectModule, MatFormFieldModule],
   declarations: [],
 })
 export class AngularMaterialModule {}

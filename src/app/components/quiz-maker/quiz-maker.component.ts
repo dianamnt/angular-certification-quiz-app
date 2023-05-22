@@ -17,10 +17,8 @@ enum Difficulty {
 })
 export class QuizMakerComponent implements OnInit, OnDestroy {
   categories: Category[];
-  quizForm = new FormGroup({
-    category: new FormControl<Category | null>(null, Validators.required),
-    difficulty: new FormControl<string | null>(null, Validators.required),
-  });
+  category = new FormControl<Category | null>(null, Validators.required);
+  difficulty = new FormControl<string | null>(null, Validators.required);
   readonly Difficulty = Difficulty;
   subscription: Subscription = new Subscription();
 
