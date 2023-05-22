@@ -7,11 +7,13 @@ import { SharingService } from '../../services/sharing.service';
   styleUrls: ['./results.component.css'],
 })
 export class ResultsComponent implements OnInit {
-  constructor() {}
+  constructor(private sharingService: SharingService) {}
 
   ngOnInit() {
-    // this.sharingSerivce.currentData$.subscribe((data) => {
-    //   console.log(data);
-    // });
+    console.log('intra in init');
+    this.sharingService.getData().subscribe((data) => {
+      console.log('ceva orice plm');
+      console.log(data);
+    });
   }
 }

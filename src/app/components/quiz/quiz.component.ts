@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Quiz } from '../../models/quiz.model';
 import { QuizService } from '../../services/quiz.service';
@@ -16,9 +17,10 @@ export class QuizComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
 
   constructor(
-    private quizService: QuizService
-  ) // private sharingService: SharingService
-  {}
+    private quizService: QuizService,
+    private sharingService: SharingService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.getQuiz();
@@ -30,8 +32,9 @@ export class QuizComponent implements OnInit, OnDestroy {
         .getQuiz(this.categoryId, this.difficulty.toLowerCase())
         .subscribe((data) => {
           this.quiz = data;
-          // this.sharingService.setData(JSON.stringify(this.quiz));
+          this.sharingService.setData('merge');
           console.log(this.quiz);
+          this.router.navigate(['results']);
         })
     );
   }
