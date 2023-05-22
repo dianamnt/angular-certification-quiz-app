@@ -1,1 +1,16 @@
-<p>quiz works!</p>
+<div class="quiz">
+  <div *ngFor="let question of quiz?.results">
+    {{ question.question }}
+    <mat-button-toggle-group
+      [(ngModel)]="question.userAnswer"
+      aria-label="Font Style"
+    >
+      <mat-button-toggle
+        *ngFor="let answer of question.all_answers"
+        [value]="answer"
+        >{{ answer }}</mat-button-toggle
+      >
+    </mat-button-toggle-group>
+    <span>{{ question.userAnswer }}</span>
+  </div>
+</div>

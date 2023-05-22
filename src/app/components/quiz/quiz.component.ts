@@ -29,12 +29,35 @@ export class QuizComponent implements OnInit, OnDestroy {
   private getQuiz() {
     this.subscription.add(
       this.quizService
-        .getQuiz(this.categoryId, this.difficulty.toLowerCase())
+        .getQuiz(this.categoryId, this.difficulty)
         .subscribe((data) => {
           this.quiz = data;
-          // this.sharingService.changeData(JSON.stringify(this.quiz));
+          this.setAllAnswers();
+          console.log(this.quiz);
         })
     );
+  }
+
+  private setAllAnswers() {
+    this.quiz.results.forEach((el) => {
+      el.all_answers = this.shuffleAnswers([
+        ...el.incorrect_answers,
+        el.correct_answer,
+      ]);
+    });
+  }
+
+  private shuffleAnswers(answers: string[]) {
+    let currentIndex = answers.length;
+    while (currentIndex != 0) {
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [answers[currentIndex], answers[randomIndex]] = [
+        answers[randomIndex],
+        answers[currentIndex],
+      ];
+    }
+    return answers;
   }
 
   ngOnDestroy() {
