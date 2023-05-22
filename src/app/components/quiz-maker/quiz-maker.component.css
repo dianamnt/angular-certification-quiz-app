@@ -1,0 +1,22 @@
+.quiz-maker {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.title {
+  margin-bottom: 40px;
+}
+
+.quiz-maker-selector-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.quiz-maker-button {
+  height: 56px;
+  padding: 0px 30px;
+}
