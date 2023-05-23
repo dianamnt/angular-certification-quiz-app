@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Category } from '../../models/category.model';
+import { Quiz } from '../../models/quiz.model';
 import { QuizService } from '../../services/quiz.service';
-import { SharingService } from '../../services/sharing.service';
 
 @Component({
   selector: 'app-quiz-maker',
@@ -15,7 +15,7 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
   difficulties: string[] = ['Easy', 'Medium', 'Hard'];
   category = new FormControl<Category | null>(null, Validators.required);
   difficulty = new FormControl<string | null>(null, Validators.required);
-  showQuiz: boolean = false;
+  quiz: Quiz;
 
   subscription: Subscription = new Subscription();
 
@@ -27,14 +27,28 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
 
   private getCategories() {
     this.subscription.add(
-      this.quizService.getAllCategories().subscribe((data) => {
-        this.categories = data.trivia_categories;
+      this.quizService.getAllCategories().subscribe({
+        next: (data) => (this.categories = data.trivia_categories),
+        error: (e) => {
+          console.error(e);
+          alert('The server ran into an issue! Please try again later.');
+        },
       })
     );
   }
 
-  openQuiz() {
-    this.showQuiz = true;
+  createQuiz() {
+    this.subscription.add(
+      this.quizService
+        .getQuiz(this.category.value.id, this.difficulty.value.toLowerCase())
+        .subscribe({
+          next: (data) => (this.quiz = data),
+          error: (e) => {
+            console.error(e);
+            alert('The server ran into an issue! Please try again later.');
+          },
+        })
+    );
   }
 
   ngOnDestroy() {
