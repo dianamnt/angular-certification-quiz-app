@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SharingService {
   private data$ = new BehaviorSubject('');
-  currentData$ = this.data$;
+  currentData$: BehaviorSubject<string> = this.data$;
 
   constructor() {}
 
