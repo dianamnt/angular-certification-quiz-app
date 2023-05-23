@@ -3,7 +3,7 @@
   <div class="quiz-maker-selector-section">
     <mat-form-field appearance="outline">
       <mat-label>Choose Category</mat-label>
-      <mat-select id="categorySelect" [formControl]="category" required>
+      <mat-select id="categorySelect" [formControl]="categoryControl" required>
         <mat-option *ngFor="let category of categories" [value]="category">
           {{ category.name }}
         </mat-option>
@@ -14,7 +14,11 @@
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Choose Category</mat-label>
-      <mat-select id="difficultySelect" [formControl]="difficulty" required>
+      <mat-select
+        id="difficultySelect"
+        [formControl]="difficultyControl"
+        required
+      >
         <mat-option
           *ngFor="let difficulty of difficulties"
           [value]="difficulty"
@@ -39,8 +43,5 @@
       Create
     </button>
   </div>
-  <app-quiz
-    *ngIf="quiz"
-    [quiz]="quiz"
-  ></app-quiz>
+  <app-quiz *ngIf="quiz" [quiz]="quiz"></app-quiz>
 </div>

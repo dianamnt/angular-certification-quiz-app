@@ -7,11 +7,15 @@
       aria-label="Font Style"
     >
       <mat-button-toggle
+        (click)="checkAllQuestionsAnswered()"
         *ngFor="let answer of question.all_answers"
         [value]="answer"
-        >{{ answer }}</mat-button-toggle
-      >
+        ><span [innerHTML]="answer"></span
+      ></mat-button-toggle>
     </mat-button-toggle-group>
     <span>{{ question.userAnswer }}</span>
   </div>
+  <button *ngIf="showSubmit" mat-stroked-button (click)="goToResults()">
+    Submit
+  </button>
 </div>

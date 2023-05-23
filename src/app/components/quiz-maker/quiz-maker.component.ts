@@ -13,8 +13,8 @@ import { QuizService } from '../../services/quiz.service';
 export class QuizMakerComponent implements OnInit, OnDestroy {
   categories: Category[];
   difficulties: string[] = ['Easy', 'Medium', 'Hard'];
-  category = new FormControl<Category | null>(null, Validators.required);
-  difficulty = new FormControl<string | null>(null, Validators.required);
+  categoryControl = new FormControl<Category | null>(null, Validators.required);
+  difficultyControl = new FormControl<string | null>(null, Validators.required);
   quiz: Quiz;
 
   subscription: Subscription = new Subscription();
@@ -38,16 +38,16 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
   }
 
   createQuiz() {
+    const categoryId = this.categoryControl.value.id;
+    const difficulty = this.difficultyControl.value.toLowerCase();
     this.subscription.add(
-      this.quizService
-        .getQuiz(this.category.value.id, this.difficulty.value.toLowerCase())
-        .subscribe({
-          next: (data) => (this.quiz = data),
-          error: (e) => {
-            console.error(e);
-            alert('The server ran into an issue! Please try again later.');
-          },
-        })
+      this.quizService.getQuiz(categoryId, difficulty).subscribe({
+        next: (data) => (this.quiz = data),
+        error: (e) => {
+          console.error(e);
+          alert('The server ran into an issue! Please try again later.');
+        },
+      })
     );
   }
 

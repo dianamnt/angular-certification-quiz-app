@@ -1,15 +1,7 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Quiz } from '../../models/quiz.model';
-import { QuizService } from '../../services/quiz.service';
 import { SharingService } from '../../services/sharing.service';
 
 @Component({
@@ -17,14 +9,16 @@ import { SharingService } from '../../services/sharing.service';
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.css'],
 })
-export class QuizComponent implements OnInit, OnChanges, OnDestroy {
+export class QuizComponent implements OnInit, OnChanges {
   @Input() quiz: Quiz;
-  subscription: Subscription = new Subscription();
+  showSubmit: boolean;
 
   constructor(private sharingService: SharingService, private router: Router) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.setAllAnswers();
+    this.showSubmit = false;
+    console.log(this.quiz);
   }
 
   ngOnInit() {}
@@ -51,7 +45,20 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
     return answers;
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  checkAllQuestionsAnswered() {
+    let counter = 0;
+    this.quiz.results.forEach((q) => {
+      if (q.userAnswer) {
+        counter++;
+      }
+    });
+    if (counter === this.quiz.results.length) {
+      this.showSubmit = true;
+    }
+  }
+
+  goToResults() {
+    this.sharingService.changeData(JSON.stringify(this.quiz));
+    this.router.navigate(['results']);
   }
 }
