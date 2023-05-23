@@ -1,1 +1,40 @@
-<p>results work! {{ cv }}</p>
+<div class="quiz-wrapper">
+  <h2>RESULTS</h2>
+  <div class="quiz">
+    <div *ngFor="let question of quiz?.results" class="question">
+      <!-- I use innerHTML here in order to decode the HTML codes from the api response string -->
+      <span class="question-title" [innerHTML]="question.question"></span>
+      <mat-button-toggle-group class="question-answers" aria-label="Font Style">
+        <mat-button-toggle
+          [ngClass]="[
+            answer === question.correct_answer ? 'background-color-green' : '',
+            answer === question.userAnswer && answer !== question.correct_answer
+              ? 'background-color-red'
+              : ''
+          ]"
+          *ngFor="let answer of question.all_answers"
+          [value]="answer"
+          ><span [innerHTML]="answer"></span
+        ></mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div
+      [ngClass]="[
+        score === 0 || score === 1 ? 'background-color-red' : '',
+        score === 2 || score === 3 ? 'background-color-yellow' : '',
+        score === 4 || score === 5 ? 'background-color-green' : ''
+      ]"
+      class="score"
+    >
+      Your scored {{ score }} out of {{ quiz.results.length }}
+    </div>
+    <button
+      class="submit-button"
+      mat-stroked-button
+      color="primary"
+      (click)="goToQuizMaker()"
+    >
+      Create a new quiz
+    </button>
+  </div>
+</div>

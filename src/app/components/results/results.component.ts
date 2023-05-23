@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Quiz } from '../../models/quiz.model';
 import { SharingService } from '../../services/sharing.service';
 
 @Component({
@@ -8,16 +10,35 @@ import { SharingService } from '../../services/sharing.service';
   styleUrls: ['./results.component.css'],
 })
 export class ResultsComponent implements OnInit, OnDestroy {
-  cv: string;
+  quiz: Quiz;
+  score: number;
   subscription: Subscription = new Subscription();
-  constructor(private sharingService: SharingService) {}
+  constructor(private sharingService: SharingService, private router: Router) {}
 
   ngOnInit() {
+    this.getQuiz();
+  }
+
+  private getQuiz() {
     this.subscription.add(
       this.sharingService.currentData$.subscribe((data) => {
-        this.cv = data;
+        this.quiz = JSON.parse(data);
+        this.computeScore();
       })
     );
+  }
+
+  private computeScore() {
+    this.score = 0;
+    this.quiz.results.forEach((el) => {
+      if (el.userAnswer === el.correct_answer) {
+        this.score++;
+      }
+    });
+  }
+
+  goToQuizMaker() {
+    this.router.navigate(['quiz-maker']);
   }
 
   ngOnDestroy() {

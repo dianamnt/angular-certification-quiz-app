@@ -1,21 +1,30 @@
-<div class="quiz">
-  <div *ngFor="let question of quiz?.results">
-    <!-- I use innerHTML here in order to decode the HTML codes from the api response string -->
-    <span [innerHTML]="question.question"></span>
-    <mat-button-toggle-group
-      [(ngModel)]="question.userAnswer"
-      aria-label="Font Style"
+<div class="quiz-wrapper">
+  <div class="quiz">
+    <div *ngFor="let question of quiz?.results" class="question">
+      <!-- I use innerHTML here in order to decode the HTML codes from the api response string -->
+      <span class="question-title" [innerHTML]="question.question"></span>
+      <mat-button-toggle-group
+        class="question-answers"
+        [(ngModel)]="question.userAnswer"
+        aria-label="Font Style"
+      >
+        <mat-button-toggle
+          class="toggle-button"
+          (click)="checkAllQuestionsAnswered()"
+          *ngFor="let answer of question.all_answers"
+          [value]="answer"
+          ><span [innerHTML]="answer"></span
+        ></mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <button
+      class="submit-button"
+      *ngIf="showSubmit"
+      mat-stroked-button
+      color="primary"
+      (click)="goToResults()"
     >
-      <mat-button-toggle
-        (click)="checkAllQuestionsAnswered()"
-        *ngFor="let answer of question.all_answers"
-        [value]="answer"
-        ><span [innerHTML]="answer"></span
-      ></mat-button-toggle>
-    </mat-button-toggle-group>
-    <span>{{ question.userAnswer }}</span>
+      Submit
+    </button>
   </div>
-  <button *ngIf="showSubmit" mat-stroked-button (click)="goToResults()">
-    Submit
-  </button>
 </div>
