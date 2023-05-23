@@ -44,5 +44,6 @@
       Create
     </button>
   </div>
-  <app-quiz *ngIf="quiz" [quiz]="quiz"></app-quiz>
+  <h4 *ngIf="showLoading">Loading...</h4>
+  <app-quiz *ngIf="quiz && !showLoading" [quiz]="quiz"></app-quiz>
 </div>

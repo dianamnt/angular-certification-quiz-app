@@ -16,6 +16,7 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
   categoryControl = new FormControl<Category | null>(null, Validators.required);
   difficultyControl = new FormControl<string | null>(null, Validators.required);
   quiz: Quiz;
+  showLoading: boolean = false;
 
   subscription: Subscription = new Subscription();
 
@@ -38,11 +39,15 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
   }
 
   createQuiz(): void {
+    this.showLoading = true;
     const categoryId = this.categoryControl.value.id;
     const difficulty = this.difficultyControl.value.toLowerCase();
     this.subscription.add(
       this.quizService.getQuiz(categoryId, difficulty).subscribe({
-        next: (data) => (this.quiz = data),
+        next: (data) => {
+          this.quiz = data;
+          this.showLoading = false;
+        },
         error: (e) => {
           console.error(e);
           alert('The server ran into an issue! Please try again later.');
