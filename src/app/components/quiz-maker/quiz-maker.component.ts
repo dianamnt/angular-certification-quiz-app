@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Category } from '../../models/category.model';
 import { Quiz } from '../../models/quiz.model';
@@ -21,11 +21,11 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
 
   constructor(private quizService: QuizService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getCategories();
   }
 
-  private getCategories() {
+  private getCategories(): void {
     this.subscription.add(
       this.quizService.getAllCategories().subscribe({
         next: (data) => (this.categories = data.trivia_categories),
@@ -37,7 +37,7 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
     );
   }
 
-  createQuiz() {
+  createQuiz(): void {
     const categoryId = this.categoryControl.value.id;
     const difficulty = this.difficultyControl.value.toLowerCase();
     this.subscription.add(
@@ -51,7 +51,7 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }

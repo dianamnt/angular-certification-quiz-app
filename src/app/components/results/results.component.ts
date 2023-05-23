@@ -19,7 +19,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
     this.getQuiz();
   }
 
-  private getQuiz() {
+  private getQuiz(): void {
     this.subscription.add(
       this.sharingService.currentData$.subscribe((data) => {
         this.quiz = JSON.parse(data);
@@ -28,7 +28,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
     );
   }
 
-  private computeScore() {
+  private computeScore(): void {
     this.score = 0;
     this.quiz.results.forEach((el) => {
       if (el.userAnswer === el.correct_answer) {
@@ -37,11 +37,11 @@ export class ResultsComponent implements OnInit, OnDestroy {
     });
   }
 
-  goToQuizMaker() {
+  goToQuizMaker(): void {
     this.router.navigate(['quiz-maker']);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }

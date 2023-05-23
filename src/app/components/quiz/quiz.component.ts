@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { Quiz } from '../../models/quiz.model';
 import { SharingService } from '../../services/sharing.service';
 
@@ -18,12 +17,11 @@ export class QuizComponent implements OnInit, OnChanges {
   ngOnChanges(): void {
     this.setAllAnswers();
     this.showSubmit = false;
-    console.log(this.quiz);
   }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  private setAllAnswers() {
+  private setAllAnswers(): void {
     this.quiz.results.forEach((el) => {
       el.all_answers = this.shuffleAnswers([
         ...el.incorrect_answers,
@@ -32,7 +30,7 @@ export class QuizComponent implements OnInit, OnChanges {
     });
   }
 
-  private shuffleAnswers(answers: string[]) {
+  private shuffleAnswers(answers: string[]): string[] {
     let currentIndex = answers.length;
     while (currentIndex != 0) {
       let randomIndex = Math.floor(Math.random() * currentIndex);
@@ -45,7 +43,7 @@ export class QuizComponent implements OnInit, OnChanges {
     return answers;
   }
 
-  checkAllQuestionsAnswered() {
+  checkAllQuestionsAnswered(): void {
     let counter = 0;
     this.quiz.results.forEach((q) => {
       if (q.userAnswer) {
@@ -57,7 +55,7 @@ export class QuizComponent implements OnInit, OnChanges {
     }
   }
 
-  goToResults() {
+  goToResults(): void {
     this.sharingService.changeData(JSON.stringify(this.quiz));
     this.router.navigate(['results']);
   }
