@@ -7,6 +7,10 @@
   margin-bottom: 150px;
 }
 
+.quiz {
+  max-width: 70%;
+}
+
 .question {
   display: flex;
   flex-direction: column;
