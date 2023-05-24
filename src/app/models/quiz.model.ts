@@ -1,5 +1,5 @@
 import { Question } from './question.model';
 
-export class Quiz {
+export interface Quiz {
   results: Question[];
 }

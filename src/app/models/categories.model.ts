@@ -1,5 +1,5 @@
 import { Category } from './category.model';
 
-export class Categories {
+export interface Categories {
   trivia_categories: Category[];
 }
