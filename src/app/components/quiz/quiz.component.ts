@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Question } from '../../models/question.model';
 import { Quiz } from '../../models/quiz.model';
 import { SharingService } from '../../services/sharing.service';
 
@@ -22,7 +23,7 @@ export class QuizComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   private setAllAnswers(): void {
-    this.quiz.results.forEach((el) => {
+    this.quiz.results.forEach((el: Question) => {
       el.all_answers = this.shuffleAnswers([
         ...el.incorrect_answers,
         el.correct_answer,
@@ -45,7 +46,7 @@ export class QuizComponent implements OnInit, OnChanges {
 
   checkAllQuestionsAnswered(): void {
     let counter = 0;
-    this.quiz.results.forEach((q) => {
+    this.quiz.results.forEach((q: Question) => {
       if (q.userAnswer) {
         counter++;
       }

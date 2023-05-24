@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { Categories } from '../../models/categories.model';
 import { Category } from '../../models/category.model';
 import { Quiz } from '../../models/quiz.model';
 import { QuizService } from '../../services/quiz.service';
@@ -29,8 +30,8 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
   private getCategories(): void {
     this.subscription.add(
       this.quizService.getAllCategories().subscribe({
-        next: (data) => (this.categories = data.trivia_categories),
-        error: (e) => {
+        next: (data: Categories) => (this.categories = data.trivia_categories),
+        error: (e: Error) => {
           console.error(e);
           alert('The server ran into an issue! Please try again later.');
         },
@@ -44,11 +45,11 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
     const difficulty = this.difficultyControl.value.toLowerCase();
     this.subscription.add(
       this.quizService.getQuiz(categoryId, difficulty).subscribe({
-        next: (data) => {
+        next: (data: Quiz) => {
           this.quiz = data;
           this.showLoading = false;
         },
-        error: (e) => {
+        error: (e: Error) => {
           console.error(e);
           alert('The server ran into an issue! Please try again later.');
         },

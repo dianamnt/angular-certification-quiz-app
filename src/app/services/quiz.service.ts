@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Categories } from '../models/category.model';
+import { Categories } from '../models/categories.model';
 import { Quiz } from '../models/quiz.model';
 
 @Injectable({

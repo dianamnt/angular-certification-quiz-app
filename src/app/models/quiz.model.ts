@@ -1,12 +1,5 @@
+import { Question } from './question.model';
+
 export class Quiz {
   results: Question[];
-}
-
-export class Question {
-  category: string;
-  question: string;
-  correct_answer: string;
-  incorrect_answers: string[];
-  userAnswer?: string;
-  all_answers?: string[];
 }
