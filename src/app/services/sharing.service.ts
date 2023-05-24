@@ -5,7 +5,8 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class SharingService {
-  private data$ = new BehaviorSubject('');
+  //BehaviourSubject default value is set to '"null"' here in order to create a valid JSON parseable string
+  private data$ = new BehaviorSubject('null');
   currentData$: BehaviorSubject<string> = this.data$;
 
   constructor() {}

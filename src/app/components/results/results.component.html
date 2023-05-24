@@ -1,5 +1,6 @@
 <div class="quiz-wrapper">
-  <h2>RESULTS</h2>
+  <h2 *ngIf="quiz">RESULTS</h2>
+  <h4 *ngIf="!quiz">There are no results to show</h4>
   <div class="quiz">
     <div *ngFor="let question of quiz?.results" class="question">
       <!-- I use innerHTML here in order to decode the HTML codes from the api response string -->
@@ -19,6 +20,7 @@
       </mat-button-toggle-group>
     </div>
     <div
+      *ngIf="quiz"
       [ngClass]="[
         score === 0 || score === 1 ? 'background-color-red' : '',
         score === 2 || score === 3 ? 'background-color-yellow' : '',

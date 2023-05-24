@@ -31,11 +31,13 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
   private computeScore(): void {
     this.score = 0;
-    this.quiz.results.forEach((el: Question) => {
-      if (el.userAnswer === el.correct_answer) {
-        this.score++;
-      }
-    });
+    if (this.quiz) {
+      this.quiz.results.forEach((el: Question) => {
+        if (el.userAnswer === el.correct_answer) {
+          this.score++;
+        }
+      });
+    }
   }
 
   goToQuizMaker(): void {
